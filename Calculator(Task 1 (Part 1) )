@@ -1,0 +1,128 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+
+const Calculator = () => {
+  const [input, setInput] = useState('');
+
+  const handlePress = (value) => {
+    setInput((prevInput) => prevInput + value);
+  };
+
+  const handleClear = () => {
+    setInput('');
+  };
+
+  const handleEvaluate = () => {
+    try {
+      setInput(eval(input).toString());
+    } catch (e) {
+      setInput('Error');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Calculator</Text>
+      <TextInput
+        style={styles.input}
+        value={input}
+        editable={false}
+      />
+      <View style={styles.buttons}>
+        <View style={styles.row}>
+          <Button label="7" onPress={() => handlePress('7')} />
+          <Button label="8" onPress={() => handlePress('8')} />
+          <Button label="9" onPress={() => handlePress('9')} />
+          <Button label="/" onPress={() => handlePress('/')} />
+        </View>
+        <View style={styles.row}>
+          <Button label="4" onPress={() => handlePress('4')} />
+          <Button label="5" onPress={() => handlePress('5')} />
+          <Button label="6" onPress={() => handlePress('6')} />
+          <Button label="*" onPress={() => handlePress('*')} />
+        </View>
+        <View style={styles.row}>
+          <Button label="1" onPress={() => handlePress('1')} />
+          <Button label="2" onPress={() => handlePress('2')} />
+          <Button label="3" onPress={() => handlePress('3')} />
+          <Button label="-" onPress={() => handlePress('-')} />
+        </View>
+        <View style={styles.row}>
+          <Button label="0" onPress={() => handlePress('0')} />
+          <Button label="." onPress={() => handlePress('.')} />
+          <Button label="C" onPress={handleClear} />
+          <Button label="+" onPress={() => handlePress('+')} />
+        </View>
+        <TouchableOpacity style={styles.equalButton} onPress={handleEvaluate}>
+          <Text style={styles.equalButtonText}>=</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+const Button = ({ label, onPress }) => (
+  <TouchableOpacity style={styles.button} onPress={onPress}>
+    <Text style={styles.buttonText}>{label}</Text>
+  </TouchableOpacity>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  header: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  input: {
+    width: '80%',
+    height: 60,
+    backgroundColor: '#e6e6e6',
+    textAlign: 'right',
+    fontSize: 32,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  buttons: {
+    width: '80%',
+    flexDirection: 'column',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  button: {
+    width: 70,
+    height: 70,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  equalButton: {
+    width: '80%',
+    height: 70,
+    backgroundColor: '#ff9500',
+    borderRadius: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  equalButtonText: {
+    fontSize: 32,
+    color: '#fff',
+  },
+});
+
+export default Calculator;
